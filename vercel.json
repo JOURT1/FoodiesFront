@@ -10,22 +10,21 @@
       }
     }
   ],
-  "routes": [
-    {
-      "src": "/(.*\\.(js|css|ico|png|jpg|jpeg|gif|svg|webp))",
-      "headers": {
-        "cache-control": "s-maxage=31536000,immutable"
-      }
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ],
   "rewrites": [
     {
       "source": "/(.*)",
       "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*\\.(js|css|ico|png|jpg|jpeg|gif|svg|webp))",
+      "headers": [
+        {
+          "key": "cache-control",
+          "value": "s-maxage=31536000,immutable"
+        }
+      ]
     }
   ]
 }
