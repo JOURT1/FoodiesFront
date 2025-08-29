@@ -1,0 +1,151 @@
+<div class="dashboard-container">
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <button class="hamburger-menu" (click)="toggleSidebar()" [class.active]="sidebarOpen">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+      <img src="assets/logo.png" alt="FoodiesBNB Logo" class="header-logo">
+    </div>
+  </header>
+
+  <!-- Sidebar Menu -->
+  <div class="sidebar-overlay" [class.active]="sidebarOpen" (click)="closeSidebar()"></div>
+  <nav class="sidebar" [class.active]="sidebarOpen">
+    <div class="sidebar-logo-section">
+      <img src="assets/logo.png" alt="FoodiesBNB Logo" class="sidebar-logo">
+    </div>
+    <ul class="sidebar-menu">
+      <li class="menu-item">
+        <a href="#" class="menu-link" (click)="navigateToSection('foodie')">
+          <span class="menu-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"></path>
+              <path d="M7 2v20"></path>
+              <path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"></path>
+            </svg>
+          </span>
+          <span class="menu-text">Foodie</span>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="#" class="menu-link" (click)="navigateToSection('restaurante')">
+          <span class="menu-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 6h18"></path>
+              <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+              <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+              <line x1="10" x2="10" y1="11" y2="17"></line>
+              <line x1="14" x2="14" y1="11" y2="17"></line>
+            </svg>
+          </span>
+          <span class="menu-text">Restaurante</span>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="#" class="menu-link" (click)="navigateToSection('cuenta')">
+          <span class="menu-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </span>
+          <span class="menu-text">Cuenta</span>
+        </a>
+      </li>
+    </ul>
+    <div class="sidebar-footer">
+      <button class="logout-btn" (click)="logout()">
+        <span class="menu-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16,17 21,12 16,7"></polyline>
+            <line x1="21" x2="9" y1="12" y2="12"></line>
+          </svg>
+        </span>
+        <span class="menu-text">Cerrar Sesión</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-header">
+      <h1>Restaurantes FoodiesBNB</h1>
+      <p class="subtitle">Explora y conecta con restaurantes locales.</p>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="navigation-tabs">
+      <button class="tab-button active" (click)="setActiveTab('explorar')">
+        Explorar Restaurantes
+      </button>
+    </div>
+
+    <!-- Search and Filters -->
+    <div class="search-filters-section">
+      <div class="search-container">
+        <div class="search-input-wrapper">
+          <input type="text" placeholder="Buscar restaurantes por nombre..." [(ngModel)]="searchTerm">
+          <span class="search-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="21 21l-4.35-4.35"></path>
+            </svg>
+          </span>
+        </div>
+      </div>
+      <div class="filters-container">
+        <div class="filter-group">
+          <span class="location-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+          </span>
+          <select class="filter-select" [(ngModel)]="locationFilter">
+            <option value="">Ubicación</option>
+            <option value="cumbaya">Cumbayá</option>
+            <option value="quito">Quito</option>
+            <option value="guayaquil">Guayaquil</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <span class="filter-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"></path>
+              <path d="M7 2v20"></path>
+              <path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"></path>
+            </svg>
+          </span>
+          <select class="filter-select" [(ngModel)]="cuisineFilter">
+            <option value="">Tipo de cocina</option>
+            <option value="brunch-pizza-pasta">Brunch-Pizza-Pasta</option>
+            <option value="grill">Grill</option>
+            <option value="sushi">Sushi</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Restaurants Grid -->
+    <div class="restaurants-grid">
+      <div class="restaurant-card" *ngFor="let restaurant of getFilteredRestaurants()">
+        <div class="card-image">
+          <img [src]="restaurant.image" [alt]="restaurant.name">
+          <button class="favorite-btn" (click)="toggleFavorite(restaurant)" 
+                  [class.active]="restaurant.favorite">
+            <span class="heart-icon">♡</span>
+          </button>
+        </div>
+        <div class="card-content">
+          <h3 class="restaurant-name">{{ restaurant.name }}</h3>
+          <p class="cuisine-type">{{ restaurant.cuisine }}</p>
+          <p class="restaurant-address">{{ restaurant.address }}</p>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

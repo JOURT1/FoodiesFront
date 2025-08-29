@@ -1,0 +1,64 @@
+<div class="login-container">
+  <div class="login-left">
+    <div class="login-form-container">
+      <div class="logo">
+        <img src="/assets/logo.png" alt="FoodiesBNB Logo" class="logo-image">
+      </div>
+      
+      <div class="form-section">
+        <h2>Iniciar Sesión</h2>
+        <p class="subtitle">Ingresa a tu cuenta para continuar</p>
+        
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <div class="error-message" *ngIf="errorMessage">
+            {{ errorMessage }}
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Correo electrónico</label>
+            <input 
+              type="email" 
+              id="email" 
+              formControlName="email"
+              placeholder="tu@email.com">
+            <div class="error" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+              <span *ngIf="loginForm.get('email')?.hasError('required')">El email es requerido</span>
+              <span *ngIf="loginForm.get('email')?.hasError('email')">Formato de email inválido</span>
+              <span *ngIf="loginForm.get('email')?.hasError('invalidEmailDomain')">Por favor usa un email de un proveedor válido (Gmail, Yahoo, Outlook, etc.)</span>
+              <span *ngIf="loginForm.get('email')?.hasError('temporaryEmail')">No se permiten emails temporales</span>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input 
+              type="password" 
+              id="password" 
+              formControlName="password"
+              placeholder="••••••••">
+            <div class="error" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+              Contraseña mínimo 6 caracteres
+            </div>
+          </div>
+          
+          <div class="forgot-password">
+            <a href="#">¿Olvidaste tu contraseña?</a>
+          </div>
+          
+          <button type="submit" class="login-btn" [disabled]="!loginForm.valid || isLoading">
+            <span *ngIf="isLoading">Iniciando sesión...</span>
+            <span *ngIf="!isLoading">Iniciar Sesión</span>
+          </button>
+        </form>
+        
+        <div class="register-link">
+          <p>¿No tienes una cuenta? <a (click)="goToRegister()">Regístrate</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="login-right">
+    <img src="assets/Login.webp" alt="Food collage" class="background-image">
+  </div>
+</div>

@@ -1,0 +1,101 @@
+<div class="register-container">
+  <div class="register-left">
+    <div class="register-form-container">
+      <div class="logo">
+        <img src="/assets/logo.png" alt="FoodiesBNB Logo" class="logo-image">
+      </div>
+      
+      <div class="form-section">
+        <h2>Crear Cuenta</h2>
+        <p class="subtitle">Únete a nuestra comunidad de foodies</p>
+        
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <div class="error-message" *ngIf="errorMessage">
+            {{ errorMessage }}
+          </div>
+          
+          <div class="name-fields-container">
+            <div class="form-group">
+              <label for="firstName">Nombre</label>
+              <input 
+                type="text" 
+                id="firstName" 
+                formControlName="firstName"
+                placeholder="Tu nombre">
+              <div class="error" *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched">
+                Nombre es requerido (mínimo 2 caracteres)
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="lastName">Apellido</label>
+              <input 
+                type="text" 
+                id="lastName" 
+                formControlName="lastName"
+                placeholder="Tu apellido">
+              <div class="error" *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched">
+                Apellido es requerido (mínimo 2 caracteres)
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Correo electrónico</label>
+            <input 
+              type="email" 
+              id="email" 
+              formControlName="email"
+              placeholder="tu@email.com">
+            <div class="error" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched">
+              <span *ngIf="registerForm.get('email')?.hasError('required')">El email es requerido</span>
+              <span *ngIf="registerForm.get('email')?.hasError('email')">Formato de email inválido</span>
+              <span *ngIf="registerForm.get('email')?.hasError('invalidEmailDomain')">Por favor usa un email de un proveedor válido (Gmail, Yahoo, Outlook, etc.)</span>
+              <span *ngIf="registerForm.get('email')?.hasError('temporaryEmail')">No se permiten emails temporales</span>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input 
+              type="password" 
+              id="password" 
+              formControlName="password"
+              placeholder="••••••••">
+            <div class="error" *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched">
+              Contraseña mínimo 6 caracteres
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="confirmPassword">Confirmar contraseña</label>
+            <input 
+              type="password" 
+              id="confirmPassword" 
+              formControlName="confirmPassword"
+              placeholder="••••••••">
+            <div class="error" *ngIf="registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched">
+              Confirma tu contraseña
+            </div>
+            <div class="error" *ngIf="registerForm.hasError('passwordMismatch') && registerForm.get('confirmPassword')?.touched">
+              Las contraseñas no coinciden
+            </div>
+          </div>
+          
+          <button type="submit" class="register-btn" [disabled]="!registerForm.valid || isLoading">
+            <span *ngIf="isLoading">Creando cuenta...</span>
+            <span *ngIf="!isLoading">Crear Cuenta</span>
+          </button>
+        </form>
+        
+        <div class="login-link">
+          <p>¿Ya tienes una cuenta? <a (click)="goToLogin()">Iniciar Sesión</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="register-right">
+    <img src="assets/Login.webp" alt="Food collage" class="background-image">
+  </div>
+</div>

@@ -1,0 +1,272 @@
+<div class="foodie-application-container">
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <img src="assets/logo.png" alt="FoodiesBNB" class="logo">
+      <div class="nav-links">
+        <a href="#" class="nav-link">Para Foodies</a>
+        <a href="#" class="nav-link">Para Restaurantes</a>
+        <a href="#" class="nav-link">Cómo Funciona</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="form-container">
+      <h1 class="title">Aplicación Para <span class="highlight">Foodies</span></h1>
+      <p class="subtitle">Completa la información y únete a FoodiesBNB.</p>
+
+      <!-- Requisitos -->
+      <div class="requirements-box">
+        <h3>Requisitos:</h3>
+        <ul>
+          <li>- Subir contenido a Instagram o TikTok.</li>
+          <li>- Tener mínimo <strong>1.000 seguidores</strong> en cualquier plataforma.</li>
+          <li>- Tener la cuenta de Instagram pública, no privada.</li>
+        </ul>
+      </div>
+
+      <!-- Formulario -->
+      <form [formGroup]="foodieForm" (ngSubmit)="onSubmit()" class="application-form">
+        
+        <!-- Información Personal -->
+        <div class="form-group">
+          <label for="nombreCompleto">Nombre y apellido *</label>
+          <input 
+            type="text" 
+            id="nombreCompleto" 
+            formControlName="nombreCompleto"
+            placeholder="Nombre y apellido"
+            class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email *</label>
+          <input 
+            type="email" 
+            id="email" 
+            formControlName="email"
+            placeholder="Email"
+            class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="numeroPersonal">Número personal *</label>
+          <div class="phone-input">
+            <select class="country-code">
+              <option value="+593">🇪🇨</option>
+            </select>
+            <input 
+              type="tel" 
+              id="numeroPersonal" 
+              formControlName="numeroPersonal"
+              placeholder="Número personal"
+              class="form-control phone-number">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="fechaNacimiento">Fecha de nacimiento *</label>
+          <input 
+            type="date" 
+            id="fechaNacimiento" 
+            formControlName="fechaNacimiento"
+            placeholder="Fecha de nacimiento"
+            class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label>Género *</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" formControlName="genero" value="masculino">
+              Masculino
+            </label>
+            <label class="radio-label">
+              <input type="radio" formControlName="genero" value="femenino">
+              Femenino
+            </label>
+          </div>
+        </div>
+
+        <!-- Ubicación -->
+        <div class="form-group">
+          <label for="paisDondeVives">País donde vives *</label>
+          <select id="paisDondeVives" formControlName="paisDondeVives" class="form-control">
+            <option value="Ecuador">País</option>
+            <option value="Ecuador">Ecuador</option>
+          </select>
+          <small class="form-note">(Solamente aceptamos Ecuador)</small>
+        </div>
+
+        <div class="form-group">
+          <label for="ciudadDondeVives">Ciudad donde vives (no el sector, ni las calles, solo ciudad) *</label>
+          <input 
+            type="text" 
+            id="ciudadDondeVives" 
+            formControlName="ciudadDondeVives"
+            placeholder="Ciudad, no sector"
+            class="form-control">
+          <small class="form-note">(Solamente aceptamos o aquellos que viven en Quito)</small>
+        </div>
+
+        <!-- Redes Sociales -->
+        <div class="form-group">
+          <label for="nivelContenido">¿Cada cuánto subes contenido en redes? *</label>
+          <select id="nivelContenido" formControlName="nivelContenido" class="form-control">
+            <option value="">Selecciona</option>
+            <option value="diario">Diario</option>
+            <option value="semanal">Semanal</option>
+            <option value="quincenal">Quincenal</option>
+            <option value="mensual">Mensual</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="usuarioInstagram">Usuario de Instagram *</label>
+          <input 
+            type="text" 
+            id="usuarioInstagram" 
+            formControlName="usuarioInstagram"
+            placeholder="@usuario"
+            class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="seguidoresInstagram">Seguidores en Instagram (sin puntos ni comas) *</label>
+          <input 
+            type="number" 
+            id="seguidoresInstagram" 
+            formControlName="seguidoresInstagram"
+            placeholder="ej: 2200"
+            class="form-control">
+          <small class="form-note">(SIN puntos ni comas, SOLO el número)</small>
+        </div>
+
+        <div class="form-group">
+          <label>¿Tienes tu cuenta de Instagram pública? *</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" formControlName="cuentaPublica" value="si">
+              Sí, es pública.
+            </label>
+            <label class="radio-label">
+              <input type="radio" formControlName="cuentaPublica" value="no">
+              No, es privada.
+            </label>
+          </div>
+          <small class="form-note">(Solo aceptamos cuentas públicas)</small>
+        </div>
+
+        <div class="form-group">
+          <label for="usuarioTiktok">Usuario de TikTok *</label>
+          <input 
+            type="text" 
+            id="usuarioTiktok" 
+            formControlName="usuarioTiktok"
+            placeholder="@usuario"
+            class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="seguidoresTiktok">Seguidores en TikTok (sin puntos ni comas) *</label>
+          <input 
+            type="number" 
+            id="seguidoresTiktok" 
+            formControlName="seguidoresTiktok"
+            placeholder="ej: 2200"
+            class="form-control">
+          <small class="form-note">(SIN puntos ni comas, SOLO el número)</small>
+        </div>
+
+        <!-- Descripción -->
+        <div class="form-group">
+          <label for="sobreTi">Sobre ti *</label>
+          <textarea 
+            id="sobreTi" 
+            formControlName="sobreTi"
+            placeholder="Cuéntanos sobre tu experiencia creando contenido y lo que buscas con esta..."
+            class="form-control textarea"
+            rows="4"></textarea>
+        </div>
+
+        <!-- Archivos -->
+        <div class="form-group">
+          <label for="instagramScreenshot">Screenshot de tu perfil en Instagram *</label>
+          <div class="file-upload">
+            <input 
+              type="file" 
+              id="instagramScreenshot" 
+              (change)="onFileSelected($event, 'instagramScreenshot')"
+              accept="image/*"
+              class="file-input">
+            <div class="file-upload-area">
+              <div class="upload-icon">📁</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="tiktokScreenshot">Screenshot de tu perfil en TikTok *</label>
+          <div class="file-upload">
+            <input 
+              type="file" 
+              id="tiktokScreenshot" 
+              (change)="onFileSelected($event, 'tiktokScreenshot')"
+              accept="image/*"
+              class="file-input">
+            <div class="file-upload-area">
+              <div class="upload-icon">📁</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="personalPhoto">Foto tuya *</label>
+          <div class="file-upload">
+            <input 
+              type="file" 
+              id="personalPhoto" 
+              (change)="onFileSelected($event, 'personalPhoto')"
+              accept="image/*"
+              class="file-input">
+            <div class="file-upload-area">
+              <div class="upload-icon">📁</div>
+              <p>La usaremos para promocionarte</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Términos -->
+        <div class="form-group">
+          <label>¿Entiendes los beneficios ofrecidos y estás de acuerdo en aceptarlos? *</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" formControlName="aceptaBeneficios" value="si">
+              Sí, estoy de acuerdo con los beneficios ofrecidos.
+            </label>
+            <label class="radio-label">
+              <input type="radio" formControlName="aceptaBeneficios" value="no">
+              No, no estoy de acuerdo con los beneficios. (no envíes tu aplicación)
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="aceptaTerminos">
+            Estoy de acuerdo en entregar mi información personal, que sea almacenada y tratada por FoodiesBNB. También estoy de acuerdo en ser contactado mediante los canales proporcionados.
+          </label>
+        </div>
+
+        <!-- Botones -->
+        <div class="form-actions">
+          <button type="submit" class="submit-btn" [disabled]="!foodieForm.valid">
+            Enviar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
