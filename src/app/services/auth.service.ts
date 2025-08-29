@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 
 export interface User {
   _id?: string;
@@ -23,7 +24,7 @@ export interface AuthResponse {
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly API_URL = 'http://localhost:3001/api/auth';
+  private readonly API_URL = `${environment.apiUrl}/auth`;
   private isLoggedInSubject = new BehaviorSubject<boolean>(false);
   public isLoggedIn$ = this.isLoggedInSubject.asObservable();
   private currentUserSubject = new BehaviorSubject<User | null>(null);
@@ -146,6 +147,32 @@ export class AuthService {
 
   getCurrentUser(): User | null {
     return this.currentUserSubject.value;
+  }
+
+  setCurrentUser(user: User): void {
+    this.currentUserSubject.next(user);
+  }
+
+  updateUserRole(newRole: string): Observable<AuthResponse> {
+    return this.http.put<AuthResponse>(`${this.API_URL}/actualizar-rol`, 
+      { rol: newRole }, 
+      { headers: this.getAuthHeaders() }
+    ).pipe(
+      map(response => {
+        if (response.success && response.usuario) {
+          // Actualizar el usuario actual en el servicio
+          this.currentUserSubject.next(response.usuario);
+        }
+        return response;
+      }),
+      catchError(error => {
+        console.error('Error actualizando rol:', error);
+        return of({
+          success: false,
+          message: error.error?.message || 'Error al actualizar rol'
+        });
+      })
+    );
   }
 
   getUserEmail(): string | null {

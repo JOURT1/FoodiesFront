@@ -124,7 +124,14 @@ export class DashboardComponent implements OnInit {
     // Implement navigation logic based on section
     switch(section) {
       case 'foodie':
-        this.setActiveTab('explorar');
+        // Verificar el rol del usuario para decidir a dónde ir
+        if (this.currentUser && this.currentUser.rol === 'foodie') {
+          // Si ya es Foodie, ir al dashboard de Foodie
+          this.router.navigate(['/foodie-dashboard']);
+        } else {
+          // Si es usuario normal, ir al formulario de aplicación
+          this.router.navigate(['/foodie-application']);
+        }
         break;
       case 'restaurante':
         // Navigate to restaurant management (if implemented)

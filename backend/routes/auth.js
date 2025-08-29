@@ -180,4 +180,60 @@ router.get('/verificar', async (req, res) => {
   }
 });
 
+// Actualizar rol del usuario
+router.put('/actualizar-rol', async (req, res) => {
+  try {
+    const token = req.header('Authorization')?.replace('Bearer ', '');
+    
+    if (!token) {
+      return res.status(401).json({
+        success: false,
+        message: 'Token no proporcionado'
+      });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const { rol } = req.body;
+
+    // Validar que el rol sea válido
+    const rolesValidos = ['usuario', 'foodie', 'restaurante'];
+    if (!rolesValidos.includes(rol)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Rol inválido'
+      });
+    }
+
+    // Actualizar el usuario
+    const usuario = await Usuario.findByIdAndUpdate(
+      decoded.userId, 
+      { 
+        rol: rol,
+        updatedAt: new Date()
+      }, 
+      { new: true }
+    );
+
+    if (!usuario) {
+      return res.status(404).json({
+        success: false,
+        message: 'Usuario no encontrado'
+      });
+    }
+
+    res.json({
+      success: true,
+      message: `Rol actualizado a ${rol} exitosamente`,
+      usuario: usuario.toSafeObject()
+    });
+
+  } catch (error) {
+    console.error('Error actualizando rol:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error interno del servidor'
+    });
+  }
+});
+
 module.exports = router;

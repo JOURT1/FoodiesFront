@@ -9,6 +9,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FoodieApplicationComponent } from './components/foodie-application/foodie-application.component';
+import { FoodieDashboardComponent } from './components/foodie-dashboard/foodie-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { FoodieApplicationComponent } from './components/foodie-application/food
     LoginComponent,
     RegisterComponent,
     DashboardComponent,
-    FoodieApplicationComponent
+    FoodieApplicationComponent,
+    FoodieDashboardComponent
   ],
   imports: [
     BrowserModule,

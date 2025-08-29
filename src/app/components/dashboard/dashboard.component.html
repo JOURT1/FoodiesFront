@@ -19,7 +19,7 @@
     </div>
     <ul class="sidebar-menu">
       <li class="menu-item">
-        <a href="#" class="menu-link" (click)="navigateToSection('foodie')">
+        <a class="menu-link" (click)="navigateToSection('foodie'); $event.preventDefault()">
           <span class="menu-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"></path>
@@ -31,7 +31,7 @@
         </a>
       </li>
       <li class="menu-item">
-        <a href="#" class="menu-link" (click)="navigateToSection('restaurante')">
+        <a class="menu-link" (click)="navigateToSection('restaurante'); $event.preventDefault()">
           <span class="menu-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M3 6h18"></path>
@@ -45,7 +45,7 @@
         </a>
       </li>
       <li class="menu-item">
-        <a href="#" class="menu-link" (click)="navigateToSection('cuenta')">
+        <a class="menu-link" (click)="navigateToSection('cuenta'); $event.preventDefault()">
           <span class="menu-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>

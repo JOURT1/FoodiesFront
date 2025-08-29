@@ -1,0 +1,286 @@
+<div class="foodie-dashboard-container">
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <button class="hamburger-menu" (click)="toggleSidebar()" [class.active]="sidebarOpen">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+      <img src="assets/logo.png" alt="FoodiesBNB Logo" class="header-logo">
+    </div>
+  </header>
+
+  <!-- Sidebar Menu -->
+  <div class="sidebar-overlay" [class.active]="sidebarOpen" (click)="closeSidebar()"></div>
+  <nav class="sidebar" [class.active]="sidebarOpen">
+    <div class="sidebar-logo-section">
+      <img src="assets/logo.png" alt="FoodiesBNB Logo" class="sidebar-logo">
+    </div>
+    <ul class="sidebar-menu">
+      <li class="menu-item">
+        <a class="menu-link active" (click)="navigateToSection('foodie'); $event.preventDefault()">
+          <span class="menu-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"></path>
+              <path d="M7 2v20"></path>
+              <path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"></path>
+            </svg>
+          </span>
+          <span class="menu-text">Dashboard Foodie</span>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a class="menu-link" (click)="goToDashboard(); $event.preventDefault()">
+          <span class="menu-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 6h18"></path>
+              <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+              <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+              <line x1="10" x2="10" y1="11" y2="17"></line>
+              <line x1="14" x2="14" y1="11" y2="17"></line>
+            </svg>
+          </span>
+          <span class="menu-text">Dashboard Principal</span>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a class="menu-link" (click)="navigateToSection('cuenta'); $event.preventDefault()">
+          <span class="menu-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </span>
+          <span class="menu-text">Cuenta</span>
+        </a>
+      </li>
+    </ul>
+    <div class="sidebar-footer">
+      <button class="logout-btn" (click)="logout()">
+        <span class="menu-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16,17 21,12 16,7"></polyline>
+            <line x1="21" x2="9" y1="12" y2="12"></line>
+          </svg>
+        </span>
+        <span class="menu-text">Cerrar Sesión</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Header Section -->
+    <div class="dashboard-header">
+      <h1 class="dashboard-title">Panel del Foodie</h1>
+      <p class="dashboard-subtitle">Explora y conecta con restaurantes locales.</p>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs">
+      <button 
+        class="tab-button"
+        [class.active]="activeTab === 'explorar'"
+        (click)="setActiveTab('explorar')">
+        Explorar Restaurantes
+      </button>
+      <button 
+        class="tab-button"
+        [class.active]="activeTab === 'visitas'"
+        (click)="setActiveTab('visitas')">
+        Mis Visitas
+      </button>
+      <button 
+        class="tab-button"
+        [class.active]="activeTab === 'favoritos'"
+        (click)="setActiveTab('favoritos')">
+        Favoritos
+      </button>
+    </div>
+
+    <!-- Search and Filters -->
+    <!-- Search and Filters -->
+    <div class="search-filters-section" *ngIf="activeTab === 'explorar'">
+      <div class="search-container">
+        <div class="search-input-wrapper">
+          <input type="text" placeholder="Buscar restaurantes por nombre..." [(ngModel)]="searchTerm">
+          <span class="search-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="21 21l-4.35-4.35"></path>
+            </svg>
+          </span>
+        </div>
+      </div>
+      <div class="filters-container">
+        <div class="filter-group">
+          <span class="location-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+          </span>
+          <select class="filter-select" [(ngModel)]="locationFilter">
+            <option value="">Ubicación</option>
+            <option value="cumbaya">Cumbayá</option>
+            <option value="quito">Quito</option>
+            <option value="guayaquil">Guayaquil</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <span class="filter-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"></path>
+              <path d="M7 2v20"></path>
+              <path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"></path>
+            </svg>
+          </span>
+          <select class="filter-select" [(ngModel)]="cuisineFilter">
+            <option value="">Tipo de cocina</option>
+            <option value="brunch-pizza-pasta">Brunch-Pizza-Pasta</option>
+            <option value="grill">Grill</option>
+            <option value="sushi">Sushi</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Restaurants Grid -->
+    <div class="restaurants-grid" *ngIf="activeTab === 'explorar'">
+      <div class="restaurant-card" *ngFor="let restaurant of restaurants">
+        <!-- Benefits Badge -->
+        <div class="benefits-badge" *ngIf="restaurant.hasBenefits">
+          <i class="fas fa-star"></i>
+          Beneficios
+        </div>
+        
+        <!-- Favorite Button -->
+        <button class="favorite-btn" (click)="toggleFavorite(restaurant)">
+          <i class="fas fa-heart" [class.favorited]="isFavorite(restaurant)"></i>
+        </button>
+
+        <!-- Restaurant Image -->
+        <div class="restaurant-image">
+          <img [src]="restaurant.image" [alt]="restaurant.name">
+        </div>
+
+        <!-- Restaurant Info -->
+        <div class="restaurant-info">
+          <div class="restaurant-header">
+            <h3 class="restaurant-name">{{ restaurant.name }}</h3>
+            <div class="restaurant-rating">
+              <div class="stars">
+                <span *ngFor="let star of generateStars(restaurant.rating)" 
+                      [class.filled]="star === '★'">★</span>
+              </div>
+              <span class="rating-text">{{ restaurant.rating }} ({{ restaurant.reviews }})</span>
+            </div>
+          </div>
+
+          <p class="restaurant-category">{{ restaurant.category }}</p>
+
+          <div class="restaurant-details">
+            <div class="detail-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>{{ restaurant.location }}</span>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-clock"></i>
+              <span>{{ restaurant.hours }}</span>
+            </div>
+          </div>
+
+          <p class="restaurant-description">{{ restaurant.description }}</p>
+
+          <div class="benefits-section" *ngIf="restaurant.hasBenefits">
+            <h4>Beneficios exclusivos:</h4>
+          </div>
+
+          <div class="restaurant-footer">
+            <div class="price-range">{{ restaurant.price }}</div>
+            <div class="action-buttons">
+              <button class="btn-primary" (click)="scheduleVisit(restaurant)">Programar Visita</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Favorites Tab Content -->
+    <div class="restaurants-grid" *ngIf="activeTab === 'favoritos'">
+      <div class="restaurant-card" *ngFor="let restaurant of getFavoriteRestaurants()">
+        <div class="benefits-badge">
+          <i class="fas fa-star"></i>
+          Beneficios
+        </div>
+        
+        <button class="favorite-btn" (click)="toggleFavorite(restaurant)">
+          <i class="fas fa-heart favorited"></i>
+        </button>
+
+        <div class="restaurant-image">
+          <img [src]="restaurant.image" [alt]="restaurant.name">
+        </div>
+
+        <div class="restaurant-info">
+          <div class="restaurant-header">
+            <h3 class="restaurant-name">{{ restaurant.name }}</h3>
+            <div class="restaurant-rating">
+              <div class="stars">
+                <span *ngFor="let star of generateStars(restaurant.rating)" 
+                      [class.filled]="star === 'filled'">★</span>
+              </div>
+              <span class="rating-text">{{ restaurant.rating }} ({{ restaurant.reviews }})</span>
+            </div>
+          </div>
+
+          <p class="restaurant-category">{{ restaurant.category }}</p>
+
+          <div class="restaurant-details">
+            <div class="detail-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>{{ restaurant.location }}</span>
+            </div>
+            <div class="detail-item">
+              <i class="fas fa-clock"></i>
+              <span>{{ restaurant.hours }}</span>
+            </div>
+          </div>
+
+          <p class="restaurant-description">{{ restaurant.description }}</p>
+
+          <div class="benefits-section">
+            <h4>Beneficios exclusivos:</h4>
+          </div>
+
+          <div class="restaurant-footer">
+            <div class="price-range">{{ restaurant.price }}</div>
+            <div class="action-buttons">
+              <button class="btn-primary" (click)="scheduleVisit(restaurant)">Programar Visita</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty Favorites Message -->
+    <div class="tab-content" *ngIf="activeTab === 'favoritos' && getFavoriteRestaurants().length === 0">
+      <div class="coming-soon">
+        <i class="fas fa-heart"></i>
+        <h3>Mis Favoritos</h3>
+        <p>Aún no tienes restaurantes favoritos. ¡Explora y marca algunos con ♥ para agregarlos aquí!</p>
+      </div>
+    </div>
+
+    <!-- Other Tab Contents -->
+    <div class="tab-content" *ngIf="activeTab === 'visitas'">
+      <div class="coming-soon">
+        <i class="fas fa-utensils"></i>
+        <h3>Mis Visitas</h3>
+        <p>Esta sección estará disponible pronto.</p>
+      </div>
+    </div>
+  </main>
+</div>

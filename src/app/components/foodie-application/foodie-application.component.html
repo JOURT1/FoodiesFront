@@ -1,38 +1,131 @@
 <div class="foodie-application-container">
   <!-- Header -->
   <header class="header">
-    <div class="header-content">
-      <img src="assets/logo.png" alt="FoodiesBNB" class="logo">
-      <div class="nav-links">
-        <a href="#" class="nav-link">Para Foodies</a>
-        <a href="#" class="nav-link">Para Restaurantes</a>
-        <a href="#" class="nav-link">Cómo Funciona</a>
-      </div>
+    <div class="header-left">
+      <button class="hamburger-menu" (click)="toggleSidebar()" [class.active]="sidebarOpen">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
+      <img src="assets/logo.png" alt="FoodiesBNB Logo" class="header-logo">
     </div>
   </header>
 
-  <!-- Main Content -->
-  <div class="main-content">
-    <div class="form-container">
-      <h1 class="title">Aplicación Para <span class="highlight">Foodies</span></h1>
-      <p class="subtitle">Completa la información y únete a FoodiesBNB.</p>
+  <!-- Sidebar Menu -->
+  <div class="sidebar-overlay" [class.active]="sidebarOpen" (click)="closeSidebar()"></div>
+  <nav class="sidebar" [class.active]="sidebarOpen">
+    <div class="sidebar-logo-section">
+      <img src="assets/logo.png" alt="FoodiesBNB Logo" class="sidebar-logo">
+    </div>
+    <ul class="sidebar-menu">
+      <li class="menu-item">
+        <a class="menu-link active" (click)="navigateToSection('foodie'); $event.preventDefault()">
+          <span class="menu-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"></path>
+              <path d="M7 2v20"></path>
+              <path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"></path>
+            </svg>
+          </span>
+          <span class="menu-text">Foodie</span>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a class="menu-link" (click)="goToDashboard(); $event.preventDefault()">
+          <span class="menu-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 6h18"></path>
+              <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+              <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+              <line x1="10" x2="10" y1="11" y2="17"></line>
+              <line x1="14" x2="14" y1="11" y2="17"></line>
+            </svg>
+          </span>
+          <span class="menu-text">Dashboard</span>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a class="menu-link" (click)="navigateToSection('cuenta'); $event.preventDefault()">
+          <span class="menu-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </span>
+          <span class="menu-text">Cuenta</span>
+        </a>
+      </li>
+    </ul>
+    <div class="sidebar-footer">
+      <button class="logout-btn" (click)="logout()">
+        <span class="menu-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16,17 21,12 16,7"></polyline>
+            <line x1="21" x2="9" y1="12" y2="12"></line>
+          </svg>
+        </span>
+        <span class="menu-text">Cerrar Sesión</span>
+      </button>
+    </div>
+  </nav>
 
-      <!-- Requisitos -->
-      <div class="requirements-box">
-        <h3>Requisitos:</h3>
-        <ul>
-          <li>- Subir contenido a Instagram o TikTok.</li>
-          <li>- Tener mínimo <strong>1.000 seguidores</strong> en cualquier plataforma.</li>
-          <li>- Tener la cuenta de Instagram pública, no privada.</li>
-        </ul>
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-header">
+      <h1>Aplicación Para <span class="highlight">Foodies</span></h1>
+      <p class="subtitle">Completa la información y únete a FoodiesBNB.</p>
+    </div>
+
+    <!-- Requisitos -->
+    <div class="requirements-section">
+      <div class="requirements-header">
+        <i class="fas fa-star-of-life"></i>
+        <h3>Requisitos para ser Foodie</h3>
       </div>
+      <div class="requirements-grid">
+        <div class="requirement-card">
+          <div class="requirement-icon">
+            <i class="fab fa-instagram"></i>
+          </div>
+          <div class="requirement-content">
+            <h4>Contenido en Redes</h4>
+            <p>Subir contenido a Instagram o TikTok regularmente</p>
+          </div>
+        </div>
+        
+        <div class="requirement-card">
+          <div class="requirement-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <div class="requirement-content">
+            <h4>Mínimo de Seguidores</h4>
+            <p>Tener mínimo <span class="highlight-number">1.000 seguidores</span> en cualquier plataforma</p>
+          </div>
+        </div>
+        
+        <div class="requirement-card">
+          <div class="requirement-icon">
+            <i class="fas fa-unlock"></i>
+          </div>
+          <div class="requirement-content">
+            <h4>Cuenta Pública</h4>
+            <p>Tener la cuenta de Instagram pública, no privada</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
       <!-- Formulario -->
       <form [formGroup]="foodieForm" (ngSubmit)="onSubmit()" class="application-form">
         
         <!-- Información Personal -->
         <div class="form-group">
-          <label for="nombreCompleto">Nombre y apellido *</label>
+          <label for="nombreCompleto">
+            Nombre y apellido *
+            <span *ngIf="foodieForm.get('nombreCompleto')?.valid" style="color: green; margin-left: 5px;">✅</span>
+            <span *ngIf="foodieForm.get('nombreCompleto')?.invalid && foodieForm.get('nombreCompleto')?.touched" style="color: red; margin-left: 5px;">❌</span>
+          </label>
           <input 
             type="text" 
             id="nombreCompleto" 
@@ -42,7 +135,11 @@
         </div>
 
         <div class="form-group">
-          <label for="email">Email *</label>
+          <label for="email">
+            Email *
+            <span *ngIf="foodieForm.get('email')?.valid" style="color: green; margin-left: 5px;">✅</span>
+            <span *ngIf="foodieForm.get('email')?.invalid && foodieForm.get('email')?.touched" style="color: red; margin-left: 5px;">❌</span>
+          </label>
           <input 
             type="email" 
             id="email" 
@@ -52,7 +149,11 @@
         </div>
 
         <div class="form-group">
-          <label for="numeroPersonal">Número personal *</label>
+          <label for="numeroPersonal">
+            Número personal *
+            <span *ngIf="foodieForm.get('numeroPersonal')?.valid" style="color: green; margin-left: 5px;">✅</span>
+            <span *ngIf="foodieForm.get('numeroPersonal')?.invalid && foodieForm.get('numeroPersonal')?.touched" style="color: red; margin-left: 5px;">❌</span>
+          </label>
           <div class="phone-input">
             <select class="country-code">
               <option value="+593">🇪🇨</option>
@@ -67,7 +168,11 @@
         </div>
 
         <div class="form-group">
-          <label for="fechaNacimiento">Fecha de nacimiento *</label>
+          <label for="fechaNacimiento">
+            Fecha de nacimiento *
+            <span *ngIf="foodieForm.get('fechaNacimiento')?.valid" style="color: green; margin-left: 5px;">✅</span>
+            <span *ngIf="foodieForm.get('fechaNacimiento')?.invalid && foodieForm.get('fechaNacimiento')?.touched" style="color: red; margin-left: 5px;">❌</span>
+          </label>
           <input 
             type="date" 
             id="fechaNacimiento" 
@@ -77,7 +182,11 @@
         </div>
 
         <div class="form-group">
-          <label>Género *</label>
+          <label>
+            Género *
+            <span *ngIf="foodieForm.get('genero')?.valid" style="color: green; margin-left: 5px;">✅</span>
+            <span *ngIf="foodieForm.get('genero')?.invalid && foodieForm.get('genero')?.touched" style="color: red; margin-left: 5px;">❌</span>
+          </label>
           <div class="radio-group">
             <label class="radio-label">
               <input type="radio" formControlName="genero" value="masculino">
@@ -88,11 +197,18 @@
               Femenino
             </label>
           </div>
+          <div *ngIf="foodieForm.get('genero')?.invalid && foodieForm.get('genero')?.touched" class="error-message">
+            <small style="color: red;">Por favor selecciona tu género</small>
+          </div>
         </div>
 
         <!-- Ubicación -->
         <div class="form-group">
-          <label for="paisDondeVives">País donde vives *</label>
+          <label for="paisDondeVives">
+            País donde vives *
+            <span *ngIf="foodieForm.get('paisDondeVives')?.valid" style="color: green; margin-left: 5px;">✅</span>
+            <span *ngIf="foodieForm.get('paisDondeVives')?.invalid && foodieForm.get('paisDondeVives')?.touched" style="color: red; margin-left: 5px;">❌</span>
+          </label>
           <select id="paisDondeVives" formControlName="paisDondeVives" class="form-control">
             <option value="Ecuador">País</option>
             <option value="Ecuador">Ecuador</option>
@@ -101,7 +217,11 @@
         </div>
 
         <div class="form-group">
-          <label for="ciudadDondeVives">Ciudad donde vives (no el sector, ni las calles, solo ciudad) *</label>
+          <label for="ciudadDondeVives">
+            Ciudad donde vives (no el sector, ni las calles, solo ciudad) *
+            <span *ngIf="foodieForm.get('ciudadDondeVives')?.valid" style="color: green; margin-left: 5px;">✅</span>
+            <span *ngIf="foodieForm.get('ciudadDondeVives')?.invalid && foodieForm.get('ciudadDondeVives')?.touched" style="color: red; margin-left: 5px;">❌</span>
+          </label>
           <input 
             type="text" 
             id="ciudadDondeVives" 
@@ -113,7 +233,11 @@
 
         <!-- Redes Sociales -->
         <div class="form-group">
-          <label for="nivelContenido">¿Cada cuánto subes contenido en redes? *</label>
+          <label for="nivelContenido">
+            ¿Cada cuánto subes contenido en redes? *
+            <span *ngIf="foodieForm.get('nivelContenido')?.valid" style="color: green; margin-left: 5px;">✅</span>
+            <span *ngIf="foodieForm.get('nivelContenido')?.invalid && foodieForm.get('nivelContenido')?.touched" style="color: red; margin-left: 5px;">❌</span>
+          </label>
           <select id="nivelContenido" formControlName="nivelContenido" class="form-control">
             <option value="">Selecciona</option>
             <option value="diario">Diario</option>
@@ -124,7 +248,11 @@
         </div>
 
         <div class="form-group">
-          <label for="usuarioInstagram">Usuario de Instagram *</label>
+          <label for="usuarioInstagram">
+            Usuario de Instagram *
+            <span *ngIf="foodieForm.get('usuarioInstagram')?.valid" style="color: green; margin-left: 5px;">✅</span>
+            <span *ngIf="foodieForm.get('usuarioInstagram')?.invalid && foodieForm.get('usuarioInstagram')?.touched" style="color: red; margin-left: 5px;">❌</span>
+          </label>
           <input 
             type="text" 
             id="usuarioInstagram" 
@@ -134,18 +262,31 @@
         </div>
 
         <div class="form-group">
-          <label for="seguidoresInstagram">Seguidores en Instagram (sin puntos ni comas) *</label>
+          <label for="seguidoresInstagram">
+            Seguidores en Instagram (sin puntos ni comas) *
+            <span *ngIf="foodieForm.get('seguidoresInstagram')?.valid" style="color: green; margin-left: 5px;">✅</span>
+            <span *ngIf="foodieForm.get('seguidoresInstagram')?.invalid && foodieForm.get('seguidoresInstagram')?.touched" style="color: red; margin-left: 5px;">❌</span>
+          </label>
           <input 
             type="number" 
             id="seguidoresInstagram" 
             formControlName="seguidoresInstagram"
             placeholder="ej: 2200"
-            class="form-control">
+            class="form-control"
+            min="0"
+            step="1"
+            (input)="onFollowersInput($event, 'seguidoresInstagram')"
+            (keypress)="onFollowersKeyPress($event)"
+            (paste)="onFollowersPaste($event)">
           <small class="form-note">(SIN puntos ni comas, SOLO el número)</small>
         </div>
 
         <div class="form-group">
-          <label>¿Tienes tu cuenta de Instagram pública? *</label>
+          <label>
+            ¿Tienes tu cuenta de Instagram pública? *
+            <span *ngIf="foodieForm.get('cuentaPublica')?.valid" style="color: green; margin-left: 5px;">✅</span>
+            <span *ngIf="foodieForm.get('cuentaPublica')?.invalid && foodieForm.get('cuentaPublica')?.touched" style="color: red; margin-left: 5px;">❌</span>
+          </label>
           <div class="radio-group">
             <label class="radio-label">
               <input type="radio" formControlName="cuentaPublica" value="si">
@@ -157,10 +298,17 @@
             </label>
           </div>
           <small class="form-note">(Solo aceptamos cuentas públicas)</small>
+          <div *ngIf="foodieForm.get('cuentaPublica')?.invalid && foodieForm.get('cuentaPublica')?.touched" class="error-message">
+            <small style="color: red;">Por favor selecciona si tu cuenta es pública</small>
+          </div>
         </div>
 
         <div class="form-group">
-          <label for="usuarioTiktok">Usuario de TikTok *</label>
+          <label for="usuarioTiktok">
+            Usuario de TikTok *
+            <span *ngIf="foodieForm.get('usuarioTiktok')?.valid" style="color: green; margin-left: 5px;">✅</span>
+            <span *ngIf="foodieForm.get('usuarioTiktok')?.invalid && foodieForm.get('usuarioTiktok')?.touched" style="color: red; margin-left: 5px;">❌</span>
+          </label>
           <input 
             type="text" 
             id="usuarioTiktok" 
@@ -170,77 +318,51 @@
         </div>
 
         <div class="form-group">
-          <label for="seguidoresTiktok">Seguidores en TikTok (sin puntos ni comas) *</label>
+          <label for="seguidoresTiktok">
+            Seguidores en TikTok (sin puntos ni comas) *
+            <span *ngIf="foodieForm.get('seguidoresTiktok')?.valid" style="color: green; margin-left: 5px;">✅</span>
+            <span *ngIf="foodieForm.get('seguidoresTiktok')?.invalid && foodieForm.get('seguidoresTiktok')?.touched" style="color: red; margin-left: 5px;">❌</span>
+          </label>
           <input 
             type="number" 
             id="seguidoresTiktok" 
             formControlName="seguidoresTiktok"
             placeholder="ej: 2200"
-            class="form-control">
+            class="form-control"
+            min="0"
+            step="1"
+            (input)="onFollowersInput($event, 'seguidoresTiktok')"
+            (keypress)="onFollowersKeyPress($event)"
+            (paste)="onFollowersPaste($event)">
           <small class="form-note">(SIN puntos ni comas, SOLO el número)</small>
         </div>
 
         <!-- Descripción -->
         <div class="form-group">
-          <label for="sobreTi">Sobre ti *</label>
+          <label for="sobreTi">
+            Sobre ti *
+            <span *ngIf="foodieForm.get('sobreTi')?.valid" style="color: green; margin-left: 5px;">✅</span>
+            <span *ngIf="foodieForm.get('sobreTi')?.invalid && foodieForm.get('sobreTi')?.touched" style="color: red; margin-left: 5px;">❌</span>
+          </label>
           <textarea 
             id="sobreTi" 
             formControlName="sobreTi"
-            placeholder="Cuéntanos sobre tu experiencia creando contenido y lo que buscas con esta..."
+            placeholder="Cuéntanos sobre tu experiencia creando contenido y lo que buscas con esta colaboración (mínimo 20 caracteres)..."
             class="form-control textarea"
             rows="4"></textarea>
-        </div>
-
-        <!-- Archivos -->
-        <div class="form-group">
-          <label for="instagramScreenshot">Screenshot de tu perfil en Instagram *</label>
-          <div class="file-upload">
-            <input 
-              type="file" 
-              id="instagramScreenshot" 
-              (change)="onFileSelected($event, 'instagramScreenshot')"
-              accept="image/*"
-              class="file-input">
-            <div class="file-upload-area">
-              <div class="upload-icon">📁</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="tiktokScreenshot">Screenshot de tu perfil en TikTok *</label>
-          <div class="file-upload">
-            <input 
-              type="file" 
-              id="tiktokScreenshot" 
-              (change)="onFileSelected($event, 'tiktokScreenshot')"
-              accept="image/*"
-              class="file-input">
-            <div class="file-upload-area">
-              <div class="upload-icon">📁</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="personalPhoto">Foto tuya *</label>
-          <div class="file-upload">
-            <input 
-              type="file" 
-              id="personalPhoto" 
-              (change)="onFileSelected($event, 'personalPhoto')"
-              accept="image/*"
-              class="file-input">
-            <div class="file-upload-area">
-              <div class="upload-icon">📁</div>
-              <p>La usaremos para promocionarte</p>
-            </div>
+          <small class="form-note">Caracteres: {{ foodieForm.get('sobreTi')?.value?.length || 0 }}/20 mínimo</small>
+          <div *ngIf="foodieForm.get('sobreTi')?.invalid && foodieForm.get('sobreTi')?.touched" class="error-message">
+            <small style="color: red;">Describe más sobre ti (mínimo 20 caracteres)</small>
           </div>
         </div>
 
         <!-- Términos -->
         <div class="form-group">
-          <label>¿Entiendes los beneficios ofrecidos y estás de acuerdo en aceptarlos? *</label>
+          <label>
+            ¿Entiendes los beneficios ofrecidos y estás de acuerdo en aceptarlos? *
+            <span *ngIf="foodieForm.get('aceptaBeneficios')?.valid" style="color: green; margin-left: 5px;">✅</span>
+            <span *ngIf="foodieForm.get('aceptaBeneficios')?.invalid && foodieForm.get('aceptaBeneficios')?.touched" style="color: red; margin-left: 5px;">❌</span>
+          </label>
           <div class="radio-group">
             <label class="radio-label">
               <input type="radio" formControlName="aceptaBeneficios" value="si">
@@ -251,22 +373,36 @@
               No, no estoy de acuerdo con los beneficios. (no envíes tu aplicación)
             </label>
           </div>
+          <div *ngIf="foodieForm.get('aceptaBeneficios')?.invalid && foodieForm.get('aceptaBeneficios')?.touched" class="error-message">
+            <small style="color: red;">Por favor selecciona una opción</small>
+          </div>
         </div>
 
         <div class="form-group">
           <label class="checkbox-label">
             <input type="checkbox" formControlName="aceptaTerminos">
             Estoy de acuerdo en entregar mi información personal, que sea almacenada y tratada por FoodiesBNB. También estoy de acuerdo en ser contactado mediante los canales proporcionados.
+            <span *ngIf="foodieForm.get('aceptaTerminos')?.valid" style="color: green; margin-left: 5px;">✅</span>
+            <span *ngIf="foodieForm.get('aceptaTerminos')?.invalid && foodieForm.get('aceptaTerminos')?.touched" style="color: red; margin-left: 5px;">❌</span>
           </label>
         </div>
 
         <!-- Botones -->
         <div class="form-actions">
+          <!-- Estado del formulario para debugging -->
+          <div *ngIf="!foodieForm.valid" style="margin-bottom: 15px; padding: 10px; background: #ffe6e6; border: 1px solid #ff9999; border-radius: 5px;">
+            <p style="margin: 0; color: #cc0000; font-weight: bold;">⚠️ Faltan campos por completar:</p>
+            <ul style="margin: 5px 0 0 20px; color: #cc0000;">
+              <li *ngFor="let field of getInvalidFieldsList()" style="margin: 2px 0;">
+                {{ field.displayName }}
+              </li>
+            </ul>
+          </div>
+          
           <button type="submit" class="submit-btn" [disabled]="!foodieForm.valid">
-            Enviar
+            {{ foodieForm.valid ? 'Enviar Aplicación' : 'Completa todos los campos requeridos' }}
           </button>
         </div>
       </form>
-    </div>
-  </div>
+    </main>
 </div>
