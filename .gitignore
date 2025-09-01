@@ -24,6 +24,10 @@ Thumbs.db
 /tmp/
 /out-tsc/
 /bazel-out
+/.angular/cache/
+
+# Backend folder (excluded from frontend repo)
+/backend/
 
 # Environment variables
 .env
@@ -84,6 +88,9 @@ dist
 # Temporary folders
 tmp/
 temp/
+
+# Backend folder (excluded from frontend repo)
+backend/
 
 # Editor directories and files
 .vscode/*

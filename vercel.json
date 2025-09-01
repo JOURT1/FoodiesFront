@@ -10,7 +10,16 @@
       }
     }
   ],
+  "functions": {
+    "api/**/*.js": {
+      "runtime": "nodejs18.x"
+    }
+  },
   "rewrites": [
+    {
+      "source": "/api/auth/(.*)",
+      "destination": "/api/auth/$1"
+    },
     {
       "source": "/(.*)",
       "destination": "/index.html"
@@ -44,5 +53,9 @@
         }
       ]
     }
-  ]
+  ],
+  "env": {
+    "MONGODB_URI": "mongodb+srv://developer:F%40%40dies8n8@foodiesbnb.j58ys97.mongodb.net/foodiesbnb",
+    "JWT_SECRET": "tu_jwt_secret_super_seguro_aqui_2024_foodiesbnb"
+  }
 }
