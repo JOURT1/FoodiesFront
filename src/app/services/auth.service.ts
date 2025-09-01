@@ -51,10 +51,16 @@ export class AuthService {
 
   private getAuthHeaders(): HttpHeaders {
     const token = this.getToken();
-    return new HttpHeaders({
+    const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': token ? `Bearer ${token}` : ''
+      'Accept': 'application/json'
     });
+    
+    if (token) {
+      return headers.set('Authorization', `Bearer ${token}`);
+    }
+    
+    return headers;
   }
 
   register(name: string, email: string, password: string): Observable<AuthResponse> {
@@ -104,9 +110,20 @@ export class AuthService {
       }),
       catchError(error => {
         console.error('Error en login:', error);
+        
+        let errorMessage = 'Error de conexión con el servidor';
+        
+        if (error.status === 0) {
+          errorMessage = 'Error de conexión: Verifique su conexión a internet o la URL del servidor';
+        } else if (error.error?.message) {
+          errorMessage = error.error.message;
+        } else if (error.message) {
+          errorMessage = error.message;
+        }
+        
         return of({
           success: false,
-          message: error.error?.message || 'Error de conexión con el servidor'
+          message: errorMessage
         });
       })
     );
