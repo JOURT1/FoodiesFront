@@ -1,19 +1,13 @@
 {
   "version": 2,
   "name": "foodiesbnb-frontend",
-  "builds": [
+  "buildCommand": "npm run build:vercel",
+  "outputDirectory": "dist/foodies-bnb",
+  "framework": "angular",
+  "rewrites": [
     {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist/foodies-bnb"
-      }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
