@@ -1,0 +1,123 @@
+<div class="visits-container">
+  <div class="visits-header">
+    <h2>Mis Visitas Programadas</h2>
+    <button class="refresh-btn" (click)="loadVisits()">
+      🔄 Actualizar
+    </button>
+  </div>
+
+  <div class="visits-tabs">
+    <button 
+      class="tab-btn" 
+      [class.active]="selectedTab === 'all'"
+      (click)="selectTab('all')">
+      Todas ({{ getVisitCountByStatus('all') }})
+    </button>
+    <button 
+      class="tab-btn" 
+      [class.active]="selectedTab === 'programada'"
+      (click)="selectTab('programada')">
+      Programadas ({{ getVisitCountByStatus('programada') }})
+    </button>
+    <button 
+      class="tab-btn" 
+      [class.active]="selectedTab === 'confirmada'"
+      (click)="selectTab('confirmada')">
+      Confirmadas ({{ getVisitCountByStatus('confirmada') }})
+    </button>
+    <button 
+      class="tab-btn" 
+      [class.active]="selectedTab === 'completada'"
+      (click)="selectTab('completada')">
+      Completadas ({{ getVisitCountByStatus('completada') }})
+    </button>
+    <button 
+      class="tab-btn" 
+      [class.active]="selectedTab === 'cancelada'"
+      (click)="selectTab('cancelada')">
+      Canceladas ({{ getVisitCountByStatus('cancelada') }})
+    </button>
+  </div>
+
+  <div class="visits-content">
+    <div *ngIf="isLoading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Cargando visitas...</p>
+    </div>
+
+    <div *ngIf="!isLoading && errorMessage" class="error-state">
+      <p>{{ errorMessage }}</p>
+      <button class="retry-btn" (click)="loadVisits()">Reintentar</button>
+    </div>
+
+    <div *ngIf="!isLoading && !errorMessage && filterVisits(selectedTab === 'all' ? undefined : selectedTab).length === 0" class="empty-state">
+      <div class="empty-icon">📅</div>
+      <h3>No hay visitas {{ selectedTab === 'all' ? '' : 'en esta categoría' }}</h3>
+      <p>Cuando programes visitas a restaurantes, aparecerán aquí.</p>
+    </div>
+
+    <div class="visits-list" *ngIf="!isLoading && !errorMessage && filterVisits(selectedTab === 'all' ? undefined : selectedTab).length > 0">
+      <div 
+        class="visit-card" 
+        *ngFor="let visit of filterVisits(selectedTab === 'all' ? undefined : selectedTab)"
+        [class]="getStatusClass(visit.estado)">
+        
+        <div class="visit-header">
+          <div class="restaurant-info">
+            <h3>{{ visit.restaurante.nombre }}</h3>
+            <p class="restaurant-address">{{ visit.restaurante.ubicacion }}</p>
+            <p class="restaurant-type">{{ visit.restaurante.tipo }}</p>
+          </div>
+          <div class="visit-status">
+            <span class="status-badge" [class]="getStatusClass(visit.estado)">
+              {{ getStatusText(visit.estado) }}
+            </span>
+          </div>
+        </div>
+
+        <div class="visit-details">
+          <div class="detail-item">
+            <span class="detail-icon">📅</span>
+            <span class="detail-text">{{ formatDate(visit.fecha) }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-icon">🕐</span>
+            <span class="detail-text">{{ formatTime(visit.hora) }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-icon">👥</span>
+            <span class="detail-text">{{ visit.numeroPersonas }} {{ visit.numeroPersonas === 1 ? 'persona' : 'personas' }}</span>
+          </div>
+          <div class="detail-item" *ngIf="visit.codigoReserva">
+            <span class="detail-icon">🎫</span>
+            <span class="detail-text">Código: {{ visit.codigoReserva }}</span>
+          </div>
+        </div>
+
+        <div class="visit-notes" *ngIf="visit.notasEspeciales">
+          <p><strong>Notas especiales:</strong> {{ visit.notasEspeciales }}</p>
+        </div>
+
+        <div class="visit-actions">
+          <div class="visit-dates">
+            <small class="created-date">
+              Creada: {{ formatDate(visit.fechaCreacion!) }}
+            </small>
+            <small class="updated-date" *ngIf="visit.fechaActualizacion">
+              Actualizada: {{ formatDate(visit.fechaActualizacion) }}
+            </small>
+          </div>
+          
+          <div class="action-buttons">
+            <button 
+              class="cancel-btn" 
+              *ngIf="visit.estado === 'programada' || visit.estado === 'confirmada'"
+              (click)="cancelVisit(visit.id)">
+              Cancelar Visita
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

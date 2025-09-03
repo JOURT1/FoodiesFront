@@ -11,6 +11,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { FoodieApplicationComponent } from './components/foodie-application/foodie-application.component';
 import { FoodieDashboardComponent } from './components/foodie-dashboard/foodie-dashboard.component';
 import { HttpErrorInterceptor } from './interceptors/http.interceptor';
+import { VisitModalComponent } from './components/visit-modal/visit-modal.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { HttpErrorInterceptor } from './interceptors/http.interceptor';
     RegisterComponent,
     DashboardComponent,
     FoodieApplicationComponent,
-    FoodieDashboardComponent
+    FoodieDashboardComponent,
+    VisitModalComponent
   ],
   imports: [
     BrowserModule,

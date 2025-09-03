@@ -1,7 +1,7 @@
 <div class="foodie-dashboard-container">
   <!-- Header -->
   <header class="header">
-    <div class="header-left">
+    <div class="header-content">
       <button class="hamburger-menu" (click)="toggleSidebar()" [class.active]="sidebarOpen">
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
@@ -42,6 +42,19 @@
             </svg>
           </span>
           <span class="menu-text">Dashboard Principal</span>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a class="menu-link" (click)="navigateToSection('visitas'); $event.preventDefault()">
+          <span class="menu-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" x2="16" y1="2" y2="6"></line>
+              <line x1="8" x2="8" y1="2" y2="6"></line>
+              <line x1="3" x2="21" y1="10" y2="10"></line>
+            </svg>
+          </span>
+          <span class="menu-text">Visitas Programadas</span>
         </a>
       </li>
       <li class="menu-item">
@@ -94,9 +107,9 @@
       </button>
       <button 
         class="tab-button"
-        [class.active]="activeTab === 'favoritos'"
-        (click)="setActiveTab('favoritos')">
-        Favoritos
+        [class.active]="activeTab === 'evidencias'"
+        (click)="setActiveTab('evidencias')">
+        Evidencias
       </button>
     </div>
 
@@ -156,11 +169,6 @@
           Beneficios
         </div>
         
-        <!-- Favorite Button -->
-        <button class="favorite-btn" (click)="toggleFavorite(restaurant)">
-          <i class="fas fa-heart" [class.favorited]="isFavorite(restaurant)"></i>
-        </button>
-
         <!-- Restaurant Image -->
         <div class="restaurant-image">
           <img [src]="restaurant.image" [alt]="restaurant.name">
@@ -208,79 +216,209 @@
       </div>
     </div>
 
-    <!-- Favorites Tab Content -->
-    <div class="restaurants-grid" *ngIf="activeTab === 'favoritos'">
-      <div class="restaurant-card" *ngFor="let restaurant of getFavoriteRestaurants()">
-        <div class="benefits-badge">
-          <i class="fas fa-star"></i>
-          Beneficios
-        </div>
-        
-        <button class="favorite-btn" (click)="toggleFavorite(restaurant)">
-          <i class="fas fa-heart favorited"></i>
-        </button>
+    <!-- Evidencias Tab Content -->
+    <div class="evidencias-content" *ngIf="activeTab === 'evidencias'">
+      <div class="evidencias-header">
+        <h3><i class="fas fa-camera"></i> Subir Evidencias de Visitas</h3>
+        <p>Después de tu visita, tienes 48 horas para subir las evidencias</p>
+      </div>
 
-        <div class="restaurant-image">
-          <img [src]="restaurant.image" [alt]="restaurant.name">
-        </div>
+      <div class="visitas-pendientes" *ngIf="getVisitsForEvidence().length > 0">
+        <div class="visita-evidencia-card" *ngFor="let visita of getVisitsForEvidence()">
+          <div class="visita-info">
+            <h4>{{ visita.restaurante.nombre }}</h4>
+            <p><i class="fas fa-calendar-alt"></i> {{ formatDate(visita.fecha) }} - {{ visita.hora }}</p>
+            <p><i class="fas fa-users"></i> {{ visita.numeroPersonas }} persona(s)</p>
+            <p class="tiempo-restante"><i class="fas fa-clock"></i> Tiempo restante: {{ getRemainingTime(visita.fecha) }}</p>
+          </div>
 
-        <div class="restaurant-info">
-          <div class="restaurant-header">
-            <h3 class="restaurant-name">{{ restaurant.name }}</h3>
-            <div class="restaurant-rating">
-              <div class="stars">
-                <span *ngFor="let star of generateStars(restaurant.rating)" 
-                      [class.filled]="star === 'filled'">★</span>
+          <div class="evidencias-form" *ngIf="!hasEvidence(visita.id)">
+            <form (ngSubmit)="submitEvidence(visita.id)">
+              <div class="form-group">
+                <label for="tiktok_{{visita.id}}"><i class="fab fa-tiktok"></i> Enlace de TikTok generado:</label>
+                <input 
+                  type="url" 
+                  id="tiktok_{{visita.id}}"
+                  [value]="evidenceForm[visita.id]?.tiktokUrl || ''"
+                  (input)="updateEvidenceForm(visita.id, 'tiktokUrl', $event)"
+                  name="tiktok"
+                  placeholder="https://tiktok.com/@usuario/video/..."
+                  required>
               </div>
-              <span class="rating-text">{{ restaurant.rating }} ({{ restaurant.reviews }})</span>
-            </div>
+
+              <div class="form-group">
+                <label for="instagram_{{visita.id}}"><i class="fab fa-instagram"></i> Foto de historia de Instagram:</label>
+                <input 
+                  type="file" 
+                  id="instagram_{{visita.id}}"
+                  (change)="onInstagramPhotoSelected($event, visita.id)"
+                  accept="image/*"
+                  required>
+                <small>Formatos aceptados: JPG, PNG, WEBP</small>
+              </div>
+
+              <div class="form-group">
+                <label for="gasto_{{visita.id}}"><i class="fas fa-dollar-sign"></i> Cantidad gastada en la visita (USD):</label>
+                <input 
+                  type="number" 
+                  id="gasto_{{visita.id}}"
+                  [value]="evidenceForm[visita.id]?.amountSpent || ''"
+                  (input)="updateEvidenceForm(visita.id, 'amountSpent', $event)"
+                  name="gasto"
+                  min="0"
+                  step="0.01"
+                  placeholder="0.00"
+                  required>
+              </div>
+
+              <button type="submit" class="submit-evidencias-btn">
+                <i class="fas fa-upload"></i> Subir Evidencias
+              </button>
+            </form>
           </div>
 
-          <p class="restaurant-category">{{ restaurant.category }}</p>
-
-          <div class="restaurant-details">
-            <div class="detail-item">
-              <i class="fas fa-map-marker-alt"></i>
-              <span>{{ restaurant.location }}</span>
-            </div>
-            <div class="detail-item">
-              <i class="fas fa-clock"></i>
-              <span>{{ restaurant.hours }}</span>
-            </div>
-          </div>
-
-          <p class="restaurant-description">{{ restaurant.description }}</p>
-
-          <div class="benefits-section">
-            <h4>Beneficios exclusivos:</h4>
-          </div>
-
-          <div class="restaurant-footer">
-            <div class="price-range">{{ restaurant.price }}</div>
-            <div class="action-buttons">
-              <button class="btn-primary" (click)="scheduleVisit(restaurant)">Programar Visita</button>
+          <div class="evidencias-enviadas" *ngIf="hasEvidence(visita.id)">
+            <div class="evidencias-status">
+              <h4><i class="fas fa-check-circle"></i> Evidencias enviadas</h4>
+              <p>Tus evidencias han sido recibidas correctamente</p>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Empty Favorites Message -->
-    <div class="tab-content" *ngIf="activeTab === 'favoritos' && getFavoriteRestaurants().length === 0">
-      <div class="coming-soon">
-        <i class="fas fa-heart"></i>
-        <h3>Mis Favoritos</h3>
-        <p>Aún no tienes restaurantes favoritos. ¡Explora y marca algunos con ♥ para agregarlos aquí!</p>
+      <div class="no-visitas-evidencias" *ngIf="getVisitsForEvidence().length === 0">
+        <div class="empty-state">
+          <div class="empty-icon"><i class="fas fa-camera"></i></div>
+          <h3>No hay visitas pendientes de evidencias</h3>
+          <p>Las visitas completadas aparecerán aquí para que subas tus evidencias</p>
+        </div>
       </div>
     </div>
 
-    <!-- Other Tab Contents -->
+    <!-- Mis Visitas Tab Content -->
     <div class="tab-content" *ngIf="activeTab === 'visitas'">
-      <div class="coming-soon">
-        <i class="fas fa-utensils"></i>
-        <h3>Mis Visitas</h3>
-        <p>Esta sección estará disponible pronto.</p>
+      <div class="visits-section">
+        <div class="section-header">
+          <h3>Mis Visitas Programadas</h3>
+          <button class="refresh-btn" (click)="loadVisits()">
+            <i class="fas fa-refresh"></i> Actualizar
+          </button>
+        </div>
+
+        <!-- Visit Tabs -->
+        <div class="visit-tabs">
+          <button 
+            class="visit-tab-btn" 
+            [class.active]="selectedVisitTab === 'all'"
+            (click)="selectVisitTab('all')">
+            Todas ({{ getVisitCountByStatus('all') }})
+          </button>
+          <button 
+            class="visit-tab-btn" 
+            [class.active]="selectedVisitTab === 'programada'"
+            (click)="selectVisitTab('programada')">
+            Programadas ({{ getVisitCountByStatus('programada') }})
+          </button>
+          <button 
+            class="visit-tab-btn" 
+            [class.active]="selectedVisitTab === 'completada'"
+            (click)="selectVisitTab('completada')">
+            Completadas ({{ getVisitCountByStatus('completada') }})
+          </button>
+          <button 
+            class="visit-tab-btn" 
+            [class.active]="selectedVisitTab === 'cancelada'"
+            (click)="selectVisitTab('cancelada')">
+            Canceladas ({{ getVisitCountByStatus('cancelada') }})
+          </button>
+        </div>
+
+        <!-- Visit Content -->
+        <div class="visits-content">
+          <!-- Loading State -->
+          <div *ngIf="isLoadingVisits" class="loading-state">
+            <div class="spinner"></div>
+            <p>Cargando visitas...</p>
+          </div>
+
+          <!-- Empty State -->
+          <div *ngIf="!isLoadingVisits && filterVisitsByStatus(selectedVisitTab === 'all' ? undefined : selectedVisitTab).length === 0" class="empty-visits-state">
+            <div class="empty-icon">📅</div>
+            <h4>No hay visitas {{ selectedVisitTab === 'all' ? '' : 'en esta categoría' }}</h4>
+            <p>Cuando programes visitas a restaurantes, aparecerán aquí.</p>
+          </div>
+
+          <!-- Visits List -->
+          <div class="visits-list" *ngIf="!isLoadingVisits && filterVisitsByStatus(selectedVisitTab === 'all' ? undefined : selectedVisitTab).length > 0">
+            <div 
+              class="visit-card" 
+              *ngFor="let visit of filterVisitsByStatus(selectedVisitTab === 'all' ? undefined : selectedVisitTab)"
+              [class]="getStatusClass(visit.estado)">
+              
+              <div class="visit-header">
+                <div class="restaurant-info">
+                  <h4>{{ visit.restaurante.nombre }}</h4>
+                  <p class="restaurant-address">{{ visit.restaurante.ubicacion }}</p>
+                  <p class="restaurant-type">{{ visit.restaurante.tipo }}</p>
+                </div>
+                <div class="visit-status">
+                  <span class="status-badge" [class]="getStatusClass(visit.estado)">
+                    {{ getStatusText(visit.estado) }}
+                  </span>
+                </div>
+              </div>
+
+              <div class="visit-details">
+                <div class="detail-item">
+                  <span class="detail-icon">📅</span>
+                  <span class="detail-text">{{ formatDate(visit.fecha) }}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-icon">🕐</span>
+                  <span class="detail-text">{{ formatTime(visit.hora) }}</span>
+                </div>
+                <div class="detail-item">
+                  <span class="detail-icon">👥</span>
+                  <span class="detail-text">{{ visit.numeroPersonas }} {{ visit.numeroPersonas === 1 ? 'persona' : 'personas' }}</span>
+                </div>
+                <div class="detail-item" *ngIf="visit.codigoReserva">
+                  <span class="detail-icon">🎫</span>
+                  <span class="detail-text">Código: {{ visit.codigoReserva }}</span>
+                </div>
+              </div>
+
+              <div class="visit-notes" *ngIf="visit.notasEspeciales">
+                <p><strong>Notas especiales:</strong> {{ visit.notasEspeciales }}</p>
+              </div>
+
+              <div class="visit-actions">
+                <div class="visit-dates">
+                  <small class="created-date">
+                    Creada: {{ formatDate(visit.fechaCreacion!) }}
+                  </small>
+                </div>
+                
+                <div class="action-buttons">
+                  <button 
+                    class="cancel-btn" 
+                    *ngIf="visit.estado === 'programada' || visit.estado === 'confirmada'"
+                    (click)="cancelVisit(visit.id)">
+                    Cancelar Visita
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </main>
 </div>
+
+<!-- Visit Modal -->
+<app-visit-modal 
+  [isOpen]="isVisitModalOpen"
+  [restaurant]="selectedRestaurant"
+  (close)="closeVisitModal()"
+  (visitCreated)="onVisitCreated()">
+</app-visit-modal>
