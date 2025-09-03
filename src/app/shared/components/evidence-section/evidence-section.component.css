@@ -1,0 +1,255 @@
+/* Complete Evidence Section Styles */
+.evidencias-content {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.evidencias-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #f8f9fa;
+}
+
+.evidencias-header h3 {
+  color: #2c3e50;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.evidencias-header p {
+  color: #6c757d;
+  font-size: 1rem;
+}
+
+.visitas-pendientes {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.visita-evidencia-card {
+  background: linear-gradient(135deg, #fff7e6 0%, #fef3e2 100%);
+  border-radius: 12px;
+  border: 2px solid #ffc107;
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.visita-evidencia-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 193, 7, 0.2);
+}
+
+.visita-info h4 {
+  color: #2c3e50;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.visita-info p {
+  color: #495057;
+  margin: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.visita-info i {
+  color: #ffc107;
+  width: 16px;
+}
+
+.tiempo-restante {
+  font-weight: 600;
+  color: #dc3545 !important;
+}
+
+.evidencias-form {
+  margin-top: 1.5rem;
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #ffc107;
+  box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.1);
+}
+
+.form-group small {
+  color: #6c757d;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+.submit-evidencias-btn {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.submit-evidencias-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
+}
+
+.evidencias-enviadas {
+  margin-top: 1.5rem;
+  background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+  padding: 2rem;
+  border-radius: 12px;
+  border: 2px solid #28a745;
+  text-align: center;
+}
+
+.evidencias-status h4 {
+  color: #155724;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.evidencias-status p {
+  color: #155724;
+  margin: 0;
+}
+
+.no-visitas-evidencias {
+  text-align: center;
+  padding: 3rem;
+}
+
+.empty-state {
+  max-width: 400px;
+  margin: 0 auto;
+  color: #6c757d;
+}
+
+.empty-state .empty-icon {
+  font-size: 4rem;
+  color: #e74c3c;
+  margin-bottom: 1rem;
+}
+
+.empty-state h3 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.empty-state p {
+  font-size: 1.1rem;
+}
+
+/* Legacy styles for compatibility */
+.evidence-section {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.evidence-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.evidence-title {
+  color: #2c3e50;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.evidence-subtitle {
+  color: #6c757d;
+  font-size: 1rem;
+}
+
+.evidence-content {
+  min-height: 400px;
+}
+
+.no-visits-message {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.no-visits-message .empty-icon {
+  font-size: 5rem;
+  color: #ddd;
+  margin-bottom: 1rem;
+}
+
+.no-visits-message h4 {
+  color: #666;
+  margin-bottom: 0.5rem;
+  font-size: 1.3rem;
+}
+
+.no-visits-message p {
+  color: #999;
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .evidencias-content {
+    padding: 1rem;
+  }
+  
+  .evidencias-header h3 {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .visita-evidencia-card {
+    padding: 1rem;
+  }
+  
+  .evidencias-form {
+    padding: 1rem;
+  }
+}

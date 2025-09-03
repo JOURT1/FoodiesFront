@@ -1,0 +1,78 @@
+<p-card [style]="{'height': '100%'}" styleClass="restaurant-card">
+  <!-- Header with image -->
+  <ng-template pTemplate="header">
+    <div class="restaurant-image-container">
+      <img [src]="restaurant.image" [alt]="restaurant.name" class="restaurant-image">
+      <div class="restaurant-overlay">
+        <p-badge 
+          *ngIf="restaurant.benefits" 
+          value="Beneficios" 
+          severity="success" 
+          class="benefits-badge">
+        </p-badge>
+        <p-button 
+          icon="pi pi-heart" 
+          [outlined]="true"
+          [rounded]="true"
+          size="small"
+          class="favorite-btn"
+          (onClick)="onToggleFavorite()">
+        </p-button>
+      </div>
+    </div>
+  </ng-template>
+
+  <!-- Content -->
+  <div class="restaurant-content">
+    <div class="restaurant-header">
+      <h3 class="restaurant-name">{{ restaurant.name }}</h3>
+      <div class="restaurant-rating">
+        <div class="stars">
+          <i 
+            *ngFor="let star of getStarsArray()" 
+            class="pi"
+            [class.pi-star-fill]="star <= restaurant.rating"
+            [class.pi-star]="star > restaurant.rating">
+          </i>
+        </div>
+        <span class="rating-text">{{ restaurant.rating }}/5</span>
+      </div>
+    </div>
+    
+    <p class="restaurant-category">{{ restaurant.category }}</p>
+    
+    <div class="restaurant-details">
+      <div class="detail-item">
+        <i class="pi pi-map-marker"></i>
+        <span>{{ restaurant.address }}</span>
+      </div>
+    </div>
+    
+    <p class="restaurant-description">{{ restaurant.description }}</p>
+    
+    <div *ngIf="restaurant.benefits" class="benefits-section">
+      <h4><i class="pi pi-gift"></i> Beneficios Especiales</h4>
+      <p>{{ restaurant.benefits }}</p>
+    </div>
+  </div>
+
+  <!-- Footer with actions -->
+  <ng-template pTemplate="footer" *ngIf="showActions">
+    <div class="restaurant-footer">
+      <span class="price-range">{{ restaurant.priceRange }}</span>
+      <div class="action-buttons">
+        <p-button 
+          label="Ver Detalles" 
+          [outlined]="true"
+          size="small">
+        </p-button>
+        <p-button 
+          label="Programar Visita" 
+          icon="pi pi-calendar-plus"
+          size="small"
+          (onClick)="onScheduleVisit()">
+        </p-button>
+      </div>
+    </div>
+  </ng-template>
+</p-card>

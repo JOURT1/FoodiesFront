@@ -7,7 +7,10 @@ import { Visit } from '../../models/visit.model';
 @Component({
   selector: 'app-foodie-dashboard',
   templateUrl: './foodie-dashboard.component.html',
-  styleUrls: ['./foodie-dashboard.component.css']
+  styleUrls: [
+    './foodie-dashboard.component.css',
+    './foodie-dashboard-sections.component.css'
+  ]
 })
 export class FoodieDashboardComponent implements OnInit {
   currentUser: any = null;
